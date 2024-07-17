@@ -9,11 +9,11 @@ const generateToken = (res, userId) => {
     );
 
     res.cookie(
-        'jwt',
-        token,
+        'jwt',  // name of cookie
+        token,  // value of cookie to be stored
         {
             httpOnly: true,  // Secure from XSS (JavaScript) attacks
-            secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
+            secure: process.env.NODE_ENV !== 'development', // Ensure cookies are only sent over HTTPS in production
             sameSite: 'strict', // Helps prevent CSRF attacks
             maxAge: 30 * 24 * 60 * 60 * 1000 // Expiry time set to 30 days (in milliseconds)
         }
