@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
+import cookieParser from "cookie-parser";
 // Import custom middleware functions for error handling
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -19,10 +20,13 @@ connectDB();
 // Initialize the Express application
 const app = express();
 
+
 // Middleware to parse incoming JSON payloads
 app.use(express.json());
 // Middleware to parse incoming URL-encoded data(form data)
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 // Use the user routes for any requests to /api/users
 app.use("/api/users", userRoutes);
