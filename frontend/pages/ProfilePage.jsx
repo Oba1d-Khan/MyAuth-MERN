@@ -8,16 +8,16 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import { setCredentials } from "../src/slices/authSlice";
 
-const ProfilePage: React.FC = () => {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
+const ProfilePage = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const { userInfo } = useSelector((state: any) => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
 
     const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
@@ -28,7 +28,7 @@ const ProfilePage: React.FC = () => {
         }
     }, [userInfo.name, userInfo.email]);
 
-    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             toast.error("Passwords do not match!");
@@ -42,7 +42,7 @@ const ProfilePage: React.FC = () => {
                 }).unwrap();
                 dispatch(setCredentials({ ...res }));
                 toast.success("Profile Updated!");
-            } catch (err: any) {
+            } catch (err) {
                 toast.error(err?.data?.message || err.error);
             }
         }

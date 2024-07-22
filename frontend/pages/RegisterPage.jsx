@@ -8,16 +8,16 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import { setCredentials } from "../src/slices/authSlice";
 
-const RegisterPage: React.FC = () => {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
+const RegisterPage = () => {
+    const [name, setName] = useState < string > ("");
+    const [email, setEmail] = useState < string > ("");
+    const [password, setPassword] = useState < string > ("");
+    const [confirmPassword, setConfirmPassword] = useState < string > ("");
 
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const { userInfo } = useSelector((state: any) => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
 
     const [register, { isLoading }] = useRegisterMutation();
 
@@ -26,7 +26,7 @@ const RegisterPage: React.FC = () => {
             navigate("/")
         }
     }, [navigate, userInfo])
-    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             toast.error("Passwords do not match!")
@@ -35,7 +35,7 @@ const RegisterPage: React.FC = () => {
                 const res = await register({ name, email, password }).unwrap();
                 dispatch(setCredentials({ ...res }));
                 navigate('/')
-            } catch (err: any) {
+            } catch (err) {
                 toast.error(err?.data?.message || err.error)
             }
         }

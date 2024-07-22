@@ -7,7 +7,7 @@ import { useLoginMutation } from "../src/slices/usersApiSlice";
 import { setCredentials } from "../src/slices/authSlice";
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader'
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
     const [login, { isLoading }] = useLoginMutation();
 
-    const { userInfo } = useSelector((state: any) => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (userInfo) {
@@ -23,13 +23,13 @@ const LoginPage: React.FC = () => {
         }
     }, [navigate, userInfo]);
 
-    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
             navigate("/");
-        } catch (err: any) {
+        } catch (err) {
             toast.error(err?.data?.message || err.error);
         }
     };

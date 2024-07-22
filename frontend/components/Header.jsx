@@ -6,12 +6,12 @@ import { logout } from "../src/slices/authSlice";
 import { useLogoutMutation } from "../src/slices/usersApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 
 const Header = () => {
 
     const navigate = useNavigate();
-    const { userInfo } = useSelector((state: any) => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const Header = () => {
             await logoutApiCall().unwrap();
             dispatch(logout());
             navigate('/');
-        } catch (err: any) {
+        } catch (err) {
             console.error(err)
         }
     };
