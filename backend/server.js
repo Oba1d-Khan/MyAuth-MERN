@@ -1,8 +1,7 @@
-import express from "express";
 import dotenv from "dotenv";
+const result = dotenv.config();
 
-// Load environment variables from .env file
-dotenv.config();
+import express from "express";
 import cookieParser from "cookie-parser";
 // Import custom middleware functions for error handling
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -19,7 +18,6 @@ connectDB();
 
 // Initialize the Express application
 const app = express();
-
 
 // Middleware to parse incoming JSON payloads
 app.use(express.json());
@@ -38,6 +36,19 @@ app.get("/", (req, res) => res.send(`Server is ready!`));
 app.use(notFound);
 // Middleware for handling errors
 app.use(errorHandler);
+
+import cors from "cors";
+
+// Allow requests from your frontend domain
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000", // for local dev
+      "https://authNow.vercel.app", // for production, replace with your actual Vercel URL
+    ],
+    credentials: true,
+  })
+);
 
 // Start the server and listen on the specified port
 app.listen(port, () => console.log(`Server started on  PORT : ${port}`));
