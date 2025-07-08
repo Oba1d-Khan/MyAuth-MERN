@@ -44,7 +44,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000", // for local dev
-      "https://authNow.vercel.app", // for production, replace with your actual Vercel URL
+      "https://authnow.vercel.app", // for production, replace with your actual Vercel URL
     ],
     credentials: true,
   })
