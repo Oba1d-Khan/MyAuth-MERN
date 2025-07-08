@@ -19,6 +19,19 @@ connectDB();
 // Initialize the Express application
 const app = express();
 
+import cors from "cors";
+
+// Allow requests from your frontend domain
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000", // for local dev
+      "https://authnow.vercel.app", // for production, replace with your actual Vercel URL
+    ],
+    credentials: true,
+  })
+);
+
 // Middleware to parse incoming JSON payloads
 app.use(express.json());
 // Middleware to parse incoming URL-encoded data(form data)
@@ -36,19 +49,6 @@ app.get("/", (req, res) => res.send(`Server is ready!`));
 app.use(notFound);
 // Middleware for handling errors
 app.use(errorHandler);
-
-import cors from "cors";
-
-// Allow requests from your frontend domain
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000", // for local dev
-      "https://authnow.vercel.app", // for production, replace with your actual Vercel URL
-    ],
-    credentials: true,
-  })
-);
 
 // Start the server and listen on the specified port
 app.listen(port, () => console.log(`Server started on  PORT : ${port}`));
